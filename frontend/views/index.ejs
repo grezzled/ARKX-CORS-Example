@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="favicon_io/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <button id="btnServerTime">GET SERVER TIME</button>
+    <h4 id="serverTimeDisplay"></h4>
+    <script>
+        const API_URL = 'http://localhost:3000/api/server_time'
+        const fetchButton = document.querySelector('#btnServerTime')
+        const displayView = document.querySelector('#serverTimeDisplay')
+        fetchButton.onclick = () => {
+            displayView.textContent = 'Loading..'
+            fetch(API_URL)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json()
+                })
+                .then(data => {
+                    displayView.style.color = 'green'
+                    displayView.textContent = `Data Received: ${data.server_time}`
+                }).catch(error => {
+                    displayView.style.color = 'red'
+                    displayView.textContent = `Fetch error: ${error}`
+                })
+        }
+    </script>
+
+</body>
+
+</html>
